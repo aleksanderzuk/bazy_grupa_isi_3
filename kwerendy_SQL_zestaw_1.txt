@@ -1,0 +1,11 @@
+Zad 1.1
+CREATE TABLE postac(id_postaci int auto_increment, nazwa varchar(40), rodzaj enum('wiking', 'ptak','kobieta'), data_ur date, wiek int unsigned, PRIMARY KEY(id_postaci));
+zad1.2
+INSERT INTO postac(nazwa) VALUES('Bjorn'),('Drozd'),('Tesciowa'),('Ragnar'),('Ubbe'),('Ivar');
+zad 1.3 
+ UPDATE klient SET wiek=88 WHERE nazwa='Tesciowa';
+zad 2.1
+CREATE TABLE walizka(id_walizki int auto_increment, pojemnosc int unsigned, kolor enum('rozowy', 'czerwony', 'teczowy', 'zolty'), id_wlasciciela int, PRIMARY KEY(id_walizki), CONSTRAINT id_walizk FOREIGN KEY(id_walizki) REFERENCES postac(id_postaci)ON DELETE CASCADE);
+zad 2.2 
+ALTER TABLE walizka ALTER COLUMN kolor SET DEFAULT 'rozowy';
+zad 2.3
