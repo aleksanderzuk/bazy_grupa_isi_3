@@ -1,11 +1,70 @@
-Zad 1.1
+zad 1.1
 CREATE TABLE postac(id_postaci int auto_increment, nazwa varchar(40), rodzaj enum('wiking', 'ptak','kobieta'), data_ur date, wiek int unsigned, PRIMARY KEY(id_postaci));
-zad1.2
-INSERT INTO postac(nazwa) VALUES('Bjorn'),('Drozd'),('Tesciowa'),('Ragnar'),('Ubbe'),('Ivar');
-zad 1.3 
- UPDATE klient SET wiek=88 WHERE nazwa='Tesciowa';
+zad 1.2
+INSERT INTO postac(nazwa, rodzaj, data_ur, wiek) VALUES ('Bjorn', 'wiking', '1900-06-17', 122);
+
+INSERT INTO postac(nazwa, rodzaj, data_ur, wiek) VALUES('Drozd', 'ptak', '2020-01-02', 2);
+
+INSERT INTO postac(nazwa, rodzaj, data_ur, wiek) VALUES('Tesciowa', 'kobieta', '1410-07-15', 610);
+
+zad 1.3 UPDATE postac SET wiek=88, data_ur='1934-07-15' WHERE nazwa='Tesciowa';
+
 zad 2.1
-CREATE TABLE walizka(id_walizki int auto_increment, pojemnosc int unsigned, kolor enum('rozowy', 'czerwony', 'teczowy', 'zolty'), id_wlasciciela int, PRIMARY KEY(id_walizki), CONSTRAINT id_walizk FOREIGN KEY(id_walizki) REFERENCES postac(id_postaci)ON DELETE CASCADE);
-zad 2.2 
+
+CREATE TABLE walizka(id_walizki int auto_increment, pojemnosc int unsigned, kolor enum('rozowy', 'czerwony', 'teczowy', 'zolty'), id_wlasciciela int, PRIMARY KEY(id_walizki), FOREIGN KEY(id_walizki) REFERENCES postac(id_postaci)ON DELETE CASCADE);
+
 ALTER TABLE walizka ALTER COLUMN kolor SET DEFAULT 'rozowy';
-zad 2.3
+
+INSERT INTO walizka (pojemnosc, kolor, id_wlasciciela) VALUES (30,'czerwony',1), (20,'teczowy',3);
+
+zad 3.1
+
+CREATE TABLE izba(adres_budynku varchar(40), nazwa_izby varchar (20), metraz int unsigned, wlasciciel int, primary key(adres_budynku, nazwa_izby), foreign key(wlasciciel) references postac(id_postaci) on delete set null);
+
+zad 3.2
+
+ALTER TABLE izba ADD kolor_izby varchar(20) default 'czarny' after metraz;
+
+zad 3.3
+
+INSERT INTO izba(adres_budynku, nazwa_izby, metraz, kolor_izby, wlasciciel) VALUES ('pilsudskiego 55', spizarnia', 10, 'bialy', 1);
+
+zad 4.1
+
+CREATE TABLE przetwory(id_przetworu int, rok_produkcji year default '1954', id_wykonawcy int, zawartosc varchar (40), dodatek varchar (40) default 'papryczka chilli', id_konsumenta int, primary key(id_przetworu), foreign key(id_konsumenta) references postac(id_postaci), foreign key(id_wykonawcy) references postac(id_postaci));
+
+zad 4.2
+
+INSERT INTO przetwory (id_przetworu, id_wykonawcy, zawartosc, id_konsumenta) VALUES (1, 1, 'bigos', 3);
+
+zad 5.1
+
+INSERT INTO postac(nazwa, rodzaj, data_ur, wiek) VALUES ('Ivar', 'wiking', '1910-04-16', 112), ('Harald', 'wiking', '1900-04-12', 122), ('Ubbe','wiking',  '1900-07-29', 122), ('Hvitserk', 'wiking', '1910-01-11', 112), ('Sigurd', 'wiking', '1910-02-02', 112);
+
+zad 5.2
+
+CREATE TABLE statek(nazwa_statku varchar(40), rodzaj_statku enum('fregata', 'drakkar', 'galeon', 'galera'), data_wodowania date, max_ladownosc int unsigned, primary key(nazwa_statku));
+
+zad 5.3
+INSERT INTO statek(nazwa_statku, rodzaj_statku, data_wodowania, max_ladownosc) VALUES('Billy of tea', 'Fregata', '2022-07-23', 150), ('Vegvisir', 'Drakkar', '2022-02-04', 200);
+
+zad 5.4
+alter table postac add funkcja varchar(40);
+
+zad 5.5
+
+update postac set funkcja='kapitan' where nazwa='Bjorn';
+
+5.6
+alter table postac add statek varchar(40);
+alter table postac add foreign key (statek) references statek(nazwa_statku);
+
+5.7
+update postac set nazwa_statku ='Vegvisir' where nazwa='Bjorn';
+update postac set nazwa_statku='Billy of tea' where nazwa='Drozd';
+5.8
+delete from izba where nazwa_izby='spizarnia';
+drop table izba;
+
+
+
