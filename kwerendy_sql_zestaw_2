@@ -1,0 +1,30 @@
+zad 1.1
+delete from postac where nazwa in('Harald', 'Ubbe');
+
+zad 1.2
+alter table walizka drop foreign key walizka_ibfk_1;
+alter table przetwory drop foreign key przetwory_ibfk_1;
+alter table przetwory drop foreign key przetwory_ibfk_2;
+alter table postac drop primary key, change id_postaci id_postaci int;
+
+zad 2.1
+alter table postac add pesel bigint(11) unsigned primary key auto_increment;
+
+zad 2.2
+alter table postac modify rodzaj enum('wiking', 'ptak', 'kobieta', 'syrena');
+
+zad 2.3
+insert into postac(nazwa, rodzaj, data_ur, wiek, pesel) values('gertruda nieszczera', 'syrena', '1990-04-16', 32, 90072993821);
+
+zad 3.1
+update postac set nazwa_statku='Vegvisir' where nazwa like '%a%';
+
+zad 3.2
+update statek set max_ladownosc=0.7*max_ladownosc where data_wodowania>'1900-12-31' and  data_wodowania<'2001
+
+zad 3.3 
+alter table postac add check(wiek<=1000);
+
+zad 4.1
+alter table postac modify rodzaj enum('wiking', 'kobieta', 'ptak', 'syrena', 'waz');
+
