@@ -5,16 +5,23 @@ zad 1.2
 alter table walizka drop foreign key walizka_ibfk_1;
 alter table przetwory drop foreign key przetwory_ibfk_1;
 alter table przetwory drop foreign key przetwory_ibfk_2;
-alter table postac drop primary key, change id_postaci id_postaci int;
+alter table postac modify id_postaci int;
+alter table postac drop primary key;
 
 zad 2.1
-alter table postac add pesel bigint(11) unsigned primary key auto_increment;
 
+alter table postac add pesel char(11) not null; 
+update postac set pesel="99304821723 " where id_postaci= "1";
+ update postac set pesel="98273821723" where id_postaci= "2";
+ update postac set pesel="98278273723" where id_postaci= "3";
+ update postac set pesel="98278283782" where id_postaci= "4";
+ update postac set pesel="19288283782 " where id_postaci= "7";
+ update postac set pesel="93204728312" where id_postaci= "8";
 zad 2.2
 alter table postac modify rodzaj enum('wiking', 'ptak', 'kobieta', 'syrena');
 
 zad 2.3
-insert into postac(nazwa, rodzaj, data_ur, wiek, pesel) values('gertruda nieszczera', 'syrena', '1990-04-16', 32, 90072993821);
+insert into postac(pesel, id_postaci, nazwa, rodzaj, data_ur, wiek) values('90072993821', 9, 'gertruda nieszczera', 'syrena', '1990-04-16', 32, 90072993821);
 
 zad 3.1
 update postac set nazwa_statku='Vegvisir' where nazwa like '%a%';
@@ -27,4 +34,37 @@ alter table postac add check(wiek<=1000);
 
 zad 4.1
 alter table postac modify rodzaj enum('wiking', 'kobieta', 'ptak', 'syrena', 'waz');
+insert into postac (pesel,id_postaci,nazwa,rodzaj,data_ur,wiek) values ("00392830192",10,"Loko","waz","2019-03-03","3");
 
+
+zad 4.2
+
+crete table marynarz select * from postac where nazwa_statku is not null;
+
+zad 4.3
+alter table marynarz add primary key(pesel);
+  alter table marynarz add foreign key(nazwa_statku) references statek(nazwa_statku);
+
+5.1
+update postac set nazwa_statku=null where nazwa_statku is not null;
+update marynarz set nazwa_statku=null where nazwa_statku is not null;
+
+5.2
+
+delete from postac where nazwa='Sigurd';
+
+5.3
+
+
+delete from statek;
+
+5.4
+alter table postac drop foreign key postac_ibfk_1;
+alter table marynarz drop foreign key marynarz_ibfk_1;
+drop table statek;
+
+5.5
+create table zwierz(id int auto_increment, nazwa varchar(40), wiek int, primary key(id));
+
+5.6
+instert into zwierz (nazwa, wiek) select nazwa, wiek from postac where rodzaj ='waz' or rodzaj='ptak';
