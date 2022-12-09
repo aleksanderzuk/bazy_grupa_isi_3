@@ -1,0 +1,39 @@
+from __future__ import annotations
+from typing import Any, List
+
+
+class BinaryNode:
+    value:Any
+    left_child:'BinaryNode'
+    right_child:'BinaryNode'
+
+    def __init__(self, value: Any):
+        self.value=value
+
+    def min(self)->'BinaryNode':
+        if self.left_child:
+            return self.left_child.min()
+        return self
+
+
+class BinarySearchTree:
+    root: BinaryNode
+
+    def __init__(self, root: BinaryNode) ->None:
+        self.root=root
+
+    def insert(self, node:BinaryNode, value: Any)->BinaryNode:
+        if node.value is None:
+            node = BinaryNode(value)
+            return node
+        else:
+            if node.value<value:
+                node.right_child=self.insert(node.right_child, value)
+            else:
+                node.left_child=self.insert(node.right_child, value)
+
+    def insert_list(self, list_ : List[Any])->None:
+        for i in list_:
+            self.insert[i]
+
+    
