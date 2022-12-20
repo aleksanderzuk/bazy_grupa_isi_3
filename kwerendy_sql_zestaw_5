@@ -1,0 +1,24 @@
+zad 1.2 
+select kreatura.nazwa from kreatura left join uczestnicy on kreatura.idKreatury=uczestnicy.id_uczestnika where id_uczestnika is null;
+
+zad 1.3
+select wyprawa.nazwa, sum(ekwipunek.ilosc) as 'suma ilosci ekwipunku' from wyprawa inner join uczestnicy on wyprawa.id_wyprawy=uczestnicy.id_wyprawy inner join ekwipunek on uczestnicy.id_uczestnika=ekwipunek.idKreatury group by
+ wyprawa.nazwa;
+
+zad 2.1
+select wyprawa.nazwa, count(uczestnicy.id_uczestnika) as 'ilosc uczestnikow', group_concat(kreatura.nazwa)as 'uczestnicy' from wyprawa inner join uczestnicy on wyprawa.id_wyprawy=uczestnicy.id_wyprawy inner join kreatura on uczestnicy.id_uczestnika=kreatura.idKreatury group by wyprawa.nazwa;
+
+zad 2.2
+ select etapy_wyprawy.dziennik, sektor.nazwa as nazwa_sektoru, wyprawa.kierownik from wyprawa inner join etapy_wyprawy on wyprawa.id_wyprawy=etapy_wyprawy.idWyprawy inner join sektor on etapy_wyprawy.sektor=sektor.id_sektora group
+by etapy_wyprawy.dziennik order by wyprawa.data_rozpoczecia asc;
+
+zad 3.1
+ select sektor.nazwa, count(etapy_wyprawy.sektor) from sektor inner join etapy_wyprawy on sektor.id_sektora=etapy_wyprawy.sektor group by sektor.nazwa;
+
+zad 3.2
+select kreatura.nazwa, if(count(uczestnicy.id_uczestnika)>0, 'bral udzial w wyprawie', 'nie bral udzialrawie') from kreatura left join uczestnicy on kreatura.idKreatury=uczestnicy.id_uczestnika group by kreatura.idKreatury;
+
+zad 4.1
+select wyprawa.id_wyprawy, sum(length(etapy_wyprawy.dziennik)) as licza_znakow from wyprawa join etapy_wyprawy on wyprawa.id_wyprawy=etapy_wyprawy.idWyprawy group by wyprawa.nazwa having sum(length(etapy_wyprawy.dziennik))<400;
+
+zad 4.2
